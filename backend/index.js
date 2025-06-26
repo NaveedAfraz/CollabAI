@@ -1,7 +1,6 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
-import mongoose from "mongoose";
 import connectDB from "./db.js";
 import userRoutes from "./routes/user.js";
 import ticketRoutes from "./routes/ticket.js";
