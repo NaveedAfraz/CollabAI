@@ -4,13 +4,25 @@ import express from "express";
 import connectDB from "./db.js";
 import userRoutes from "./routes/user.js";
 import ticketRoutes from "./routes/ticket.js";
+import cookieParser from "cookie-parser";
+import { serve } from "inngest/express";
+import inngestClient from "./inngest/client.js";
+import { userSignUp } from "./inngest/functions/signUp.js";
+import { onTicketCreate } from "./inngest/functions/ticket-create.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 connectDB();
-
+app.use(
+  "api/inngest",
+  serve({
+    client: inngestClient,
+    functions: [userSignUp, onTicketCreate],
+  })
+);
 app.use("/api/auth", userRoutes);
-app.use("/api/ticket", ticketRoutes);
+app.use("/api/tickets", ticketRoutes);
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
