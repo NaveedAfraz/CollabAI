@@ -1,4 +1,4 @@
-import "dotenv/config";
+import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import connectDB from "./db.js";
@@ -10,8 +10,9 @@ import inngestClient from "./inngest/client.js";
 import { userSignUp } from "./inngest/functions/signUp.js";
 import { onTicketCreate } from "./inngest/functions/ticket-create.js";
 const app = express();
-app.use(cors());
+dotenv.config();
 app.use(express.json());
+app.use(cors());
 app.use(cookieParser());
 connectDB();
 app.use(
