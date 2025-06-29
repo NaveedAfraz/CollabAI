@@ -7,19 +7,19 @@ import ticketRoutes from "./routes/ticket.js";
 import cookieParser from "cookie-parser";
 import { serve } from "inngest/express";
 import inngestClient from "./inngest/client.js";
-import { userSignUp } from "./inngest/functions/signUp.js";
+import { onSignUp } from "./inngest/functions/signUp.js";
 import { onTicketCreate } from "./inngest/functions/ticket-create.js";
 const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-app.use(cookieParser());
+app.use(cookieParser());  
 connectDB();
 app.use(
   "api/inngest",
   serve({
     client: inngestClient,
-    functions: [userSignUp, onTicketCreate],
+    functions: [onSignUp, onTicketCreate],
   })
 );
 app.use("/api/auth", userRoutes);

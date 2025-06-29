@@ -1,6 +1,6 @@
-import { inngest } from "inngest";
+import { Inngest } from "inngest";
 
-const inngestClient = new inngest.Client({
+const inngestClient = new Inngest({
   id: "ticking-system",
 });
 

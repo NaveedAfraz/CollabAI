@@ -1,9 +1,9 @@
-import User from "../models/users";
+import User from "../models/users.js";
 import jwt from "jsonwebtoken";
-import inngestClient from "../inngest/client";
+import inngestClient from "../inngest/client.js";
 import bcrypt from "bcrypt";
-import { sendEmail } from "../utils/mailer";
-import users from "../models/users";
+import { sendEmail } from "../utils/mailer.js";
+import users from "../models/users.js";
 
 export const signUp = async (req, res) => {
   try {

@@ -1,8 +1,8 @@
-import Ticket from "../../models/ticketing";
-import analyzeTicket from "../../utils/ai";
-import inngestClient from "../client";
+import Ticket from "../../models/ticketing.js";
+import analyzeTicket from "../../utils/ai.js";
+import inngestClient from "../client.js";
 import { NonRetriableError } from "inngest";
-import User from "../../models/users";
+import User from "../../models/users.js";
 export const onTicketCreate = inngestClient.createFunction(
   { id: "onTicketCreate", retries: 2 },
   { event: "ticket/create" },
