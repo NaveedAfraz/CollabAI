@@ -1,27 +1,52 @@
 import { useNavigate } from "react-router";
-import { useState } from "react";
-import { useEffect } from "react";
-// import { useAuth } from "../context/authContext";
-function AuthCheck({ children, protectedRoute }) {
-    let user = "hi"
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        if (user) {
-            setLoading(false);
-        }
-    }, [user, navigate, protectedRoute]);
-    if (!user && protectedRoute) {
-        navigate("/login");
-        setLoading(false)
-    } else {
-        navigate("/")
-    }
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    return children
+import { useState, useEffect } from "react";
+import axios from "axios";
 
+function AuthCheck({ children, protectedRoute }) {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/auth/getAuthenticatedUser`,
+          { withCredentials: true }
+        );
+        const data = res.data;
+
+        if (res.status === 200 || res.status === 201) {
+          setUser(data);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Auth check error:", error);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+//   useEffect(() => {
+//     if (!loading) {
+//       if (user && !protectedRoute) {
+//         navigate("/");
+//       } else if (!user && protectedRoute) {
+//         navigate("/signUp");
+//       }
+//     }
+//   }, [user, loading, navigate, protectedRoute]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return children;
 }
 
-export default AuthCheck
+export default AuthCheck;

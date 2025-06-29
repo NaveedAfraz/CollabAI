@@ -27,10 +27,11 @@ function useSignUp() {
           localStorage.setItem("user", JSON.stringify(data.user));
           navigate("/");
         } else {
-          alert(data.message || "Signup failed");
+        //  alert(data.message || "Signup failed");
+        console.log(data.message || "Signup failed");
         }
       } catch (err) {
-        alert("Something went wrong");
+      //  alert("Somethindg went wrong");
         console.error(err.response.data);
       } finally {
         setLoading(false);

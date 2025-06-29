@@ -11,9 +11,10 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<AuthCheck protectedRoute={true}><Tickets /></AuthCheck>} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/" element={<AuthCheck protectedRoute={true}><Tickets /></AuthCheck>} />
+
       <Route path="/tickets/:id" element={<AuthCheck protectedRoute={true}><TicketDetails /></AuthCheck>} />
       <Route path="/admin" element={<AuthCheck protectedRoute={true}><Admin /></AuthCheck>} />
     </Routes>

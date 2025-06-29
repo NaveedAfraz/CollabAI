@@ -12,10 +12,11 @@ export const createTicket = async (req, res) => {
         success: false,
       });
     }
+    console.log(req.user);
     const ticket = await Ticket.create({
       title,
       description,
-      createdBy: req.user._id.toString(),
+      createdBy: req.user._id,
     });
 
     await InngestClient.send({
@@ -23,7 +24,7 @@ export const createTicket = async (req, res) => {
       data: {
         ticketId: ticket._id,
         description: description,
-        createdBy: req.user._id.toString(),
+        createdBy: req.user._id,
       },
     });
 

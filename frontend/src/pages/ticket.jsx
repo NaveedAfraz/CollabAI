@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import useTicket from "../hooks/useTicket";
-
+import Navbar from "../components/navbar";
 export default function TicketDetails() {
     const { ticket, loading, error } = useTicket();
 
@@ -12,6 +12,8 @@ export default function TicketDetails() {
     if (error) return <div className="text-center mt-10">Error loading ticket details</div>;
 
     return (
+        <> 
+        <Navbar />
         <div className="max-w-3xl mx-auto p-4">
             <h2 className="text-2xl font-bold mb-4">Ticket Details</h2>
 
@@ -63,5 +65,6 @@ export default function TicketDetails() {
                 )}
             </div>
         </div>
+        </>
     );
 }

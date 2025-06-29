@@ -30,8 +30,11 @@ function useTickets() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        console.log(form);
         try {
-            const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/tickets`, form);
+            const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/tickets/createTicket`, form, {
+                withCredentials: true,
+            });
             console.log(res);
             const data = await res.data;
 
@@ -39,10 +42,11 @@ function useTickets() {
                 setForm({ title: "", description: "" });
                 fetchTickets(); // Refresh list
             } else {
-                alert(data.message || "Ticket creation failed");
+                // alert(data.message || "Ticket creation failed");
+                console.log(data.message || "Ticket creation failed");
             }
         } catch (err) {
-            alert("Error creating ticket");
+            // alert("Error creating ticket");
             console.error(err);
         } finally {
             setLoading(false);

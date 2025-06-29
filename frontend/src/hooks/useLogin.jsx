@@ -15,20 +15,21 @@ function useLogin() {
         try {
             const res = await axios.post(
                 `${import.meta.env.VITE_SERVER_URL}/auth/login`,
-                form
+                form,
+                {
+                    withCredentials: true,
+                }
             );
+            console.log(res);
 
             const data = await res.data;
             console.log(data);
-            if (res.status === 201 || res.status === 200) {
-                // localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
+            if (res.data.success) {
+                setUser(data.user);
                 navigate("/");
-            } else {
-                alert(data.message || "Login failed");
             }
         } catch (err) {
-            alert("Something went wrong");
+            //alert("Somsething went wrong");
             console.error(err.response.data);
         } finally {
             setLoading(false);
