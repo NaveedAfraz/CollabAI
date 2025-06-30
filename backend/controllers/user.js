@@ -52,11 +52,11 @@ export const signIn = async (req, res) => {
         .status(400)
         .json({ message: "Invalid password", success: false });
     }
-    const token = jwt.sign({ email }, process.env.JWT_SECRET);
+    const token = jwt.sign({ email, role: user.role }, process.env.JWT_SECRET);
     return res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "none",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       })
@@ -90,7 +90,7 @@ export const logout = async (req, res) => {
 
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "none",
     });
 
@@ -132,15 +132,22 @@ export const getUser = async (req, res) => {
 };
 
 export const getUsers = async (req, res) => {
+  console.log(req.user, "us er");
   try {
     if (req.user.role !== "admin") {
-      return res.status(403).json({ error: "Forbidden" });
+      return res.status(403).json({ message: "Forbidden", success: false });
     }
 
     const users = await User.find().select("-password");
     return res.json(users);
   } catch (error) {
-    res.status(500).json({ error: "Update failed", details: error.message });
+    res
+      .status(500)
+      .json({
+        message: "Update failed",
+        success: false,
+        details: error.message,
+      });
   }
 };
 

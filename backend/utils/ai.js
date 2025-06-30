@@ -7,7 +7,7 @@ const analyzeTicket = async (ticket) => {
       apiKey: process.env.GEMINI_API_KEY,
     }),
     name: "AI Ticket Triage Assistant",
-    system: `You are an expert AI assistant that processes technical support tickets. 
+    system: `You are an expert AI assistant that processes technical support tickets.
 
 Your job is to:
 1. Summarize the issue.
@@ -23,15 +23,12 @@ IMPORTANT:
 Repeat: Do not wrap your output in markdown or code fences.`,
   });
 
-  const response =
-    await supportAgent.run(`You are a ticket triage agent. Only return a strict JSON object with no extra text, headers, or markdown.
-        
-Analyze the following support ticket and provide a JSON object with:
+  const response = await supportAgent.run(`Analyze the following support ticket and provide a JSON object with:
 
 - summary: A short 1-2 sentence summary of the issue.
 - priority: One of "low", "medium", or "high".
 - helpfulNotes: A detailed technical explanation that a moderator can use to solve this issue. Include useful external links or resources if possible.
-- relatedSkills: An array of relevant skills required to solve the issue (e.g., ["React", "MongoDB"]).
+- relatedSkills: An array of relevant skills required to solve the issue (e.g., ["React", "Node.js"])
 
 Respond ONLY in this JSON format and do not include any other text or markdown in the answer:
 
@@ -46,18 +43,30 @@ Respond ONLY in this JSON format and do not include any other text or markdown i
 
 Ticket information:
 
-- Title: ${ticket.title}
-- Description: ${ticket.description}`);
+- Title: ${ticket.title || "Untitled"}
+- Description: ${ticket.description}
+`);
 
-  const raw = response.output[0].context;
+  const raw = response.output?.[0]?.context;
+  console.log("Raw AI output:", raw);
+
+  if (!raw) {
+    console.error("AI response was undefined or malformed:", response.output);
+    return {
+      code: "AI_RESPONSE_EMPTY",
+      message: "AI did not return a usable response.",
+    };
+  }
 
   try {
-    const match = raw.match(/```json\s*([\s\S]*?)\s*```/i);
-    const jsonString = match ? match[1] : raw.trim();
-    return JSON.parse(jsonString);
+    return JSON.parse(raw.trim());
   } catch (e) {
-    console.log("Failed to parse JSON from AI response" + e.message);
-    return null; // watch out for this
+    console.error("Failed to parse JSON from AI response:", raw, e.message);
+    return {
+      code: "AI_PARSE_ERROR",
+      message: "Failed to parse JSON from AI output.",
+      detail: e.message,
+    };
   }
 };
 
