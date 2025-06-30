@@ -20,7 +20,8 @@ export const onSignUp = inngest.createFunction(
         }
         return user;
       });
-
+     console.log(email);
+     
       await step.run("sendWelcomeEmail", async () => {
         await sendEmail({
           to: email,
