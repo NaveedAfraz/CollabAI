@@ -9,7 +9,7 @@ function useFetchUsers() {
     const fetchUsers = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/auth/users`, {
+            const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/auth/getUsers`, {
                 withCredentials: true
             });
             const data = await res.data;
