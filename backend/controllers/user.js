@@ -131,6 +131,19 @@ export const getUser = async (req, res) => {
   }
 };
 
+export const getUsers = async (req, res) => {
+  try {
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+
+    const users = await User.find().select("-password");
+    return res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Update failed", details: error.message });
+  }
+};
+
 export const updateUser = async (req, res) => {
   try {
     const { skills = [], role, email } = req.body;
