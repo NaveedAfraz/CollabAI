@@ -4,7 +4,7 @@ import useLogOut from "../hooks/useLogOut";
 export default function Navbar() {
   const { user } = useAuth();
   console.log(user);
-  let userFound = user?.userFound?.id;
+ 
   const { logOut } = useLogOut();
   return (
     <div className="navbar bg-base-200">
@@ -14,7 +14,7 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="flex gap-2">
-        {userFound ? (
+        {!user?.userFound?._id ? (
           <>
             <Link to="/signup" className="btn btn-sm">
               Signup
@@ -26,7 +26,7 @@ export default function Navbar() {
         ) : (
           <>
             <p>Hi, {user?.userFound?.email}</p>
-            {userFound && user?.userFound?.role === "admin" ? (
+            {user?.userFound?.role === "admin" ? (
               <Link to="/admin" className="btn btn-sm">
                 Admin
               </Link>
