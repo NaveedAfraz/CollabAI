@@ -5,7 +5,7 @@ export const createTicket = async (req, res) => {
   try {
     const { title, description } = req.body;
     console.log(title, description);
-
+    console.log(process.env.INNGEST_EVENT_KEY, "event key");
     if (!title || !description) {
       return res.status(400).json({
         message: "Title and description are required",
