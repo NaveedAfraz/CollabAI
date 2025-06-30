@@ -23,7 +23,8 @@ IMPORTANT:
 Repeat: Do not wrap your output in markdown or code fences.`,
   });
 
-  const response = await supportAgent.run(`Analyze the following support ticket and provide a JSON object with:
+  const response =
+    await supportAgent.run(`Analyze the following support ticket and provide a JSON object with:
 
 - summary: A short 1-2 sentence summary of the issue.
 - priority: One of "low", "medium", or "high".
@@ -47,7 +48,7 @@ Ticket information:
 - Description: ${ticket.description}
 `);
 
-  const raw = response.output?.[0]?.context;
+  const raw = response.output?.[0]?.content;
   console.log("Raw AI output:", raw);
 
   if (!raw) {
@@ -58,13 +59,24 @@ Ticket information:
     };
   }
 
+  let jsonString = raw.trim();
+  if (jsonString.startsWith("```")) {
+    jsonString = jsonString
+      .replace(/```(?:json)?\s*([\s\S]*?)\s*```/, "$1")
+      .trim();
+  }
+
   try {
-    return JSON.parse(raw.trim());
+    return JSON.parse(jsonString);
   } catch (e) {
-    console.error("Failed to parse JSON from AI response:", raw, e.message);
+    console.error(
+      "Failed to parse cleaned JSON from AI response:",
+      jsonString,
+      e.message
+    );
     return {
       code: "AI_PARSE_ERROR",
-      message: "Failed to parse JSON from AI output.",
+      message: "Failed to parse cleaned JSON from AI output.",
       detail: e.message,
     };
   }
