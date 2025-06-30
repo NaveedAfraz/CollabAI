@@ -1,6 +1,7 @@
 import { NonRetriableError } from "inngest";
 import { inngest } from "../client.js";
-import User from "../../models/users.js";
+import User from "../../models/users.js"; 
+import { sendEmail } from "../../utils/mailer.js";
 export const onSignUp = inngest.createFunction(
   {
     id: "onSignUp",
@@ -21,7 +22,7 @@ export const onSignUp = inngest.createFunction(
       });
 
       await step.run("sendWelcomeEmail", async () => {
-        await step.sendEmail({
+        await sendEmail({
           to: email,
           subject: "Welcome to our app",
           message: `Welcome to our app ${getUser.email}`,

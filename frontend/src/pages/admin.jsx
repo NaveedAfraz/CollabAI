@@ -18,7 +18,8 @@ export default function AdminPanel() {
     setFormData,
   });
 
-
+  console.log(users);
+  console.log(filteredUsers);
   useEffect(() => {
     fetchUsers();
   }, []);

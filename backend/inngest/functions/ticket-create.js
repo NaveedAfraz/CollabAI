@@ -3,6 +3,7 @@ import analyzeTicket from "../../utils/ai.js";
 import { inngest } from "../client.js";
 import { NonRetriableError } from "inngest";
 import User from "../../models/users.js";
+import { sendEmail } from "../../utils/mailer.js";
 export const onTicketCreate = inngest.createFunction(
   { id: "ticket/create", retries: 2 },
   { event: "ticket/create" },
@@ -70,7 +71,7 @@ export const onTicketCreate = inngest.createFunction(
       await step.run("sendNotification", async () => {
         if (moderator) {
           const FinalTicket = await Ticket.findById(ticketData._id);
-          await step.sendEmail({
+          await sendEmail({
             to: moderator.email,
             subject: "New ticket assigned",
             message: `You have been assigned a new ticket: ${FinalTicket.title}`,
