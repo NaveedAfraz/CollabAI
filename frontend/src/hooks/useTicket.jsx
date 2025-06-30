@@ -13,7 +13,7 @@ function useTicket() {
         const fetchTicket = async () => {
             try {
                 const res = await axios.get(
-                    `${import.meta.env.VITE_SERVER_URL}/tickets/${id}`,
+                    `${import.meta.env.VITE_SERVER_URL}/tickets/getTicket/${id}`,
                     { withCredentials: true }
                 )
                 console.log(res);

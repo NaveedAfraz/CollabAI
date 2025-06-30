@@ -21,7 +21,7 @@ app.use(
 app.use(cookieParser());
 connectDB();
 app.use(
-  "api/inngest",
+  "/api/inngest",
   serve({
     client: inngestClient,
     functions: [onSignUp, onTicketCreate],

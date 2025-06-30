@@ -4,7 +4,7 @@ import useLogOut from "../hooks/useLogOut";
 export default function Navbar() {
   const { user } = useAuth();
   console.log(user);
-  let userFound = user?.userfound?.id;
+  let userFound = user?.userFound?.id;
   const { logOut } = useLogOut();
   return (
     <div className="navbar bg-base-200">
@@ -25,8 +25,8 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <p>Hi, {user?.email}</p>
-            {userFound && user?.userfound?.role === "admin" ? (
+            <p>Hi, {user?.userFound?.email}</p>
+            {userFound && user?.userFound?.role === "admin" ? (
               <Link to="/admin" className="btn btn-sm">
                 Admin
               </Link>

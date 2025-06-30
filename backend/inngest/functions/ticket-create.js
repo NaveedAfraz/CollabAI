@@ -4,12 +4,13 @@ import inngestClient from "../client.js";
 import { NonRetriableError } from "inngest";
 import User from "../../models/users.js";
 export const onTicketCreate = inngestClient.createFunction(
-  { id: "onTicketCreate", retries: 2 },
+  { id: "ticket/create", retries: 2 },
   { event: "ticket/create" },
   async ({ event, step }) => {
+    console.log("Event received:", event);
     try {
       const { ticketData } = event.data;
-
+      console.log(ticketData, "ticket data");
       const ticket = await step.run("getTicket", async () => {
         const ticket = await Ticket.findById(ticketData._id);
         if (!ticket) {
@@ -55,7 +56,7 @@ export const onTicketCreate = inngestClient.createFunction(
             $elemMatch: { $regex: relatedSkills.join("|"), $options: "i" },
           },
         });
-        
+
         if (!user) {
           user = await User.findOne({ role: "admin" });
         }

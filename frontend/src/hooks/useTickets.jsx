@@ -10,7 +10,9 @@ function useTickets() {
 
     const fetchTickets = async () => {
         try {
-            const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/tickets`);
+            const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/tickets/getTickets`, {
+                withCredentials: true,
+            });
             const data = await res.data;
             console.log(data);
             setTickets(data.tickets || []);

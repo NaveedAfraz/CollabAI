@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import useTicket from "../hooks/useTicket";
 import Navbar from "../components/navbar";

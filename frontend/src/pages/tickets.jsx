@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import useTickets from "../hooks/useTickets";
 import Navbar from "../components/navbar";
 export default function Tickets() {

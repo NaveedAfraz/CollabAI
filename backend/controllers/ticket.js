@@ -22,12 +22,13 @@ export const createTicket = async (req, res) => {
     await InngestClient.send({
       name: "ticket/create",
       data: {
-        ticketId: ticket._id,
-        description: description,
-        createdBy: req.user._id,
+        ticketData: {
+          ticketId: ticket._id,
+          description,
+          createdBy: req.user._id,
+        },
       },
     });
-
     return res
       .status(201)
       .json({ message: "Ticket created successfully", success: true });
