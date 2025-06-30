@@ -10,7 +10,7 @@ export const sendEmail = async (to, subject, message) => {
         pass: process.env.MAILTRAP_SMTP_PASS,
       },
     });
-    console.log(to, subject, message);
+    console.log(to, subject, message, "email sent successfully");
     const info = await transporter.sendMail({
       from: "Inngest TMS",
       to,
