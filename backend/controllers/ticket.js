@@ -1,4 +1,4 @@
-import InngestClient from "../inngest/client.js";
+import { inngest } from "../inngest/client.js";
 import Ticket from "../models/ticketing.js";
 
 export const createTicket = async (req, res) => {
@@ -13,17 +13,17 @@ export const createTicket = async (req, res) => {
       });
     }
     console.log(req.user);
-    const ticket = await Ticket.create({
+    const ticket = Ticket.create({
       title,
       description,
       createdBy: req.user._id,
     });
 
-    await InngestClient.send({
+    await inngest.send({
       name: "ticket/create",
       data: {
         ticketData: {
-          ticketId: ticket._id,
+          _id: (await ticket)._id,
           description,
           createdBy: req.user._id,
         },
@@ -31,7 +31,7 @@ export const createTicket = async (req, res) => {
     });
     return res
       .status(201)
-      .json({ message: "Ticket created successfully", success: true });
+      .json({ message: "Ticket created successfully", success: true, ticket });
   } catch (error) {
     console.log(error);
     return res

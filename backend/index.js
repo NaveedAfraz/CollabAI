@@ -6,7 +6,7 @@ import userRoutes from "./routes/user.js";
 import ticketRoutes from "./routes/ticket.js";
 import cookieParser from "cookie-parser";
 import { serve } from "inngest/express";
-import inngestClient from "./inngest/client.js";
+import { inngest } from "./inngest/client.js";
 import { onSignUp } from "./inngest/functions/signUp.js";
 import { onTicketCreate } from "./inngest/functions/ticket-create.js";
 const app = express();
@@ -23,7 +23,7 @@ connectDB();
 app.use(
   "/api/inngest",
   serve({
-    client: inngestClient,
+    client: inngest,
     functions: [onSignUp, onTicketCreate],
   })
 );

@@ -1,9 +1,9 @@
 import Ticket from "../../models/ticketing.js";
 import analyzeTicket from "../../utils/ai.js";
-import inngestClient from "../client.js";
+import { inngest } from "../client.js";
 import { NonRetriableError } from "inngest";
 import User from "../../models/users.js";
-export const onTicketCreate = inngestClient.createFunction(
+export const onTicketCreate = inngest.createFunction(
   { id: "ticket/create", retries: 2 },
   { event: "ticket/create" },
   async ({ event, step }) => {

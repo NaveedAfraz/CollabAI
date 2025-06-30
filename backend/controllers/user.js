@@ -1,6 +1,6 @@
 import User from "../models/users.js";
 import jwt from "jsonwebtoken";
-import inngestClient from "../inngest/client.js";
+import { inngest } from "../inngest/client.js";
 import bcrypt from "bcrypt";
 import { sendEmail } from "../utils/mailer.js";
 import users from "../models/users.js";
@@ -18,7 +18,7 @@ export const signUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     const newUser = await User.create({ email, password: hashedPassword });
 
-    await inngestClient.send({
+    await inngest.send({
       name: "user/signUp",
       data: {
         email,
