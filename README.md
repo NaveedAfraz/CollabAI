@@ -27,24 +27,3 @@ CollabAI is a modern collaboration platform built using the **MERN stack** (Mong
 | Material UI | Component Library            |
 
 ---
-
-## 📁 Folder Structure
-
-collabai/
-│
-├── client/ # React frontend
-│ ├── src/
-│ │ ├── components/
-│ │ ├── pages/
-│ │ ├──  ...
-│
-├── server/ # Node.js backend
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── inngest/ # Inngest token handlers
-│ └── ...
-│
-└── README.md
-
- 
