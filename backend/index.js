@@ -20,6 +20,9 @@ app.use(
 );
 app.use(cookieParser());
 connectDB();
+app.use("/api/health", (req, res) => {
+  res.json({ message: "Server is running" });
+});
 app.use(
   "/api/inngest",
   serve({
