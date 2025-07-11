@@ -9,19 +9,17 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add password confirmation logic before submitting
+
     if (form.password !== form.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
     handleSignup(e);
-    // On successful signup from your hook, you would navigate
     navigate("/login");
   };
 
   return (
     <div className="min-h-screen w-full lg:grid lg:grid-cols-2">
-      {/* --- Left Panel (Branding) --- */}
       <div className="hidden lg:flex flex-col items-center justify-center bg-primary p-10 text-primary-content">
         <PartyPopper size={80} className="mb-4" />
         <h1 className="text-4xl font-bold mb-2">Join Our Community</h1>
@@ -30,7 +28,6 @@ function Signup() {
         </p>
       </div>
 
-      {/* --- Right Panel (Form) --- */}
       <div className="flex items-center justify-center p-6 lg:p-12 bg-base-200">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
@@ -40,7 +37,6 @@ function Signup() {
             </p>
           </div>
 
-          {/* --- Signup Form --- */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* <label className="input input-bordered flex items-center gap-2 w-full">
               <User className="w-4 h-4 opacity-70 " />
@@ -107,7 +103,6 @@ function Signup() {
             </button>
           </form>
 
-          {/* --- Login Link --- */}
           <div className="mt-6 text-center text-sm">
             <p className="text-base-content/70">
               Already have an account?{' '}
