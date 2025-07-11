@@ -1,55 +1,35 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { useState } from "react";
 import useTickets from "../hooks/useTickets";
 import Navbar from "../components/navbar";
+import CreateTicketForm from "../components/createTicketForm";
+import TicketList from "../components/ticketList";
+
 export default function Tickets() {
     const { form, handleChange, handleSubmit, tickets, loading } = useTickets();
+
     return (
         <>
             <Navbar />
-            <div className="p-4 max-w-3xl mx-auto">
-                <h2 className="text-2xl font-bold mb-4">Create Ticket</h2>
+            <main className="mx-auto p-4 lg:p-8 bg-base-300 w-[100%] min-h-screen">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-[100%]">
+                    {/* Column 1: Create Ticket Form */}
+                    <aside className="lg:col-span-1">
+                        <div className="sticky top-8 w-[100%]">
+                           <CreateTicketForm
+                                form={form}
+                                handleChange={handleChange}
+                                handleSubmit={handleSubmit}
+                                loading={loading}
+                           />
+                        </div>
+                    </aside>
 
-                <form onSubmit={handleSubmit} className="space-y-3 mb-8">
-                    <input
-                        name="title"
-                        value={form.title}
-                        onChange={handleChange}
-                        placeholder="Ticket Title"
-                        className="input input-bordered w-full"
-                        required
-                    />
-                    <textarea
-                        name="description"
-                        value={form.description}
-                        onChange={handleChange}
-                        placeholder="Ticket Description"
-                        className="textarea textarea-bordered w-full"
-                        required
-                    ></textarea>
-                    <button className="btn btn-primary" type="submit" disabled={loading}>
-                        {loading ? "Submitting..." : "Submit Ticket"}
-                    </button>
-                </form>
-
-                <h2 className="text-xl font-semibold mb-2">All Tickets</h2>
-                <div className="space-y-3">
-                    {tickets.map((ticket) => (
-                        <Link
-                            key={ticket._id}
-                            className="card shadow-md p-4 bg-gray-800"
-                            to={`/tickets/${ticket._id}`}
-                        >
-                            <h3 className="font-bold text-lg">{ticket.title}</h3>
-                            <p className="text-sm">{ticket.description}</p>
-                            <p className="text-sm text-gray-500">
-                                Created At: {new Date(ticket.createdAt).toLocaleString()}
-                            </p>
-                        </Link>
-                    ))}
-                    {tickets.length === 0 && <p>No tickets submitted yet.</p>}
+                    {/* Column 2: Tickets List */}
+                    <section className="lg:col-span-2">
+                        <TicketList tickets={tickets} loading={loading} />
+                    </section>
                 </div>
-            </div>
+            </main>
         </>
     );
 }
