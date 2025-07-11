@@ -22,7 +22,7 @@ function Login() {
         </p>
       </div>
 
-      <div className="flex items-center justify-center p-6 lg:p-12 bg-base-200">
+      <div className="flex items-center justify-center p-6 lg:p-12 bg-base-200 h-screen">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold">Sign In</h1>
