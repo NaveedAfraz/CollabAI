@@ -7,17 +7,21 @@ import Login from './pages/login'
 import Signup from './pages/signup'
 import TicketDetails from './pages/ticket'
 import Admin from './pages/admin'
+import { Analytics } from "@vercel/analytics/react"
 function App() {
 
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/" element={<AuthCheck protectedRoute={true}><Tickets /></AuthCheck>} />
+    <>
+      <Analytics />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/" element={<AuthCheck protectedRoute={true}><Tickets /></AuthCheck>} />
 
-      <Route path="/tickets/:id" element={<AuthCheck protectedRoute={true}><TicketDetails /></AuthCheck>} />
-      <Route path="/admin" element={<AuthCheck protectedRoute={true}><Admin /></AuthCheck>} />
-    </Routes>
+        <Route path="/tickets/:id" element={<AuthCheck protectedRoute={true}><TicketDetails /></AuthCheck>} />
+        <Route path="/admin" element={<AuthCheck protectedRoute={true}><Admin /></AuthCheck>} />
+      </Routes>
+    </>
   )
 }
 
