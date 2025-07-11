@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import TicketCard from "./TicketCard";
+import TicketCard from "./ticketCard";
 import { Search, XCircle } from "lucide-react"; // Using lucide-react for icons
 
 const TicketSkeleton = () => (
