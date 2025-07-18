@@ -4,8 +4,8 @@ import { authenticate } from "../middleware/authenticate.js";
 import { createTicket, getTicket, getTickets } from "../controllers/ticket.js";
 import { getAuthenticatedUser } from "../controllers/user.js";
 
-router.get("/getTickets", authenticate, getTickets);
-router.get("/getTicket/:ticketId", authenticate, getTicket);
+router.get("/getTickets", getTickets);
+router.get("/getTicket/:ticketId", getTicket);
 router.post("/createTicket", authenticate, createTicket);
 router.get("/getAuthenticatedUser", authenticate, getAuthenticatedUser);
 export default router;

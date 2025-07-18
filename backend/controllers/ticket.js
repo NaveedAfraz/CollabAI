@@ -44,7 +44,7 @@ export const getTickets = async (req, res) => {
   try {
     const user = req.user;
     let tickets = [];
-    if (user.role !== "user") {
+    if (user?.role !== "user") {
       tickets = await Ticket.find()
         .populate("assignedTo", ["email", "_id"])
         .sort({ createdAt: -1 });
@@ -67,11 +67,11 @@ export const getTickets = async (req, res) => {
 export const getTicket = async (req, res) => {
   try {
     const user = req.user;
-    if (!user) {
-      return res.status(401).json({ message: "Unauthorized", success: false });
-    }
+    // if (!user) {
+    //   return res.status(401).json({ message: "Unauthorized", success: false });
+    // }
     let ticket;
-    if (user.role !== "user") {
+    if (user?.role !== "user") {
       ticket = await Ticket.findById(req.params.ticketId)
         .populate("assignedTo", ["email", "_id"])
         .populate("createdBy", ["email", "_id"]);

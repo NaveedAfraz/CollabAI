@@ -41,7 +41,7 @@ export default function TicketDetails() {
             <TicketDetailsSkeleton />
         </>
     );
-
+    console.log(ticket, error);
     if (error || !ticket) return (
         <>
             <Navbar />
@@ -74,12 +74,12 @@ export default function TicketDetails() {
                         <p className="text-base-content/80 leading-relaxed">
                             {ticket.description}
                         </p>
-                        
+
                         <div className="mt-8">
-                             <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
-                                <BrainCircuit size={20} className="text-primary"/>
+                            <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                                <BrainCircuit size={20} className="text-primary" />
                                 AI Generated Notes
-                             </h3>
+                            </h3>
                             {ticket.helpfulNotes === "" ? (
                                 <AILoadingIndicator text="Gemini is analyzing the ticket..." />
                             ) : ticket.helpfulNotes ? (
@@ -144,7 +144,7 @@ export default function TicketDetails() {
                                         ))}
                                     </div>
                                 ) : (
-                                     <p className="text-xs text-base-content/60 italic">None identified.</p>
+                                    <p className="text-xs text-base-content/60 italic">None identified.</p>
                                 )}
                             </div>
 
