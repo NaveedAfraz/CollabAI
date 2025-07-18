@@ -1,6 +1,9 @@
+import { useAuth } from "./auth/authCheck";
+
 export default function CreateTicketForm({ form, handleChange, handleSubmit, loading }) {
     const MAX_DESC_LENGTH = 500;
-
+    const { user } = useAuth();
+    console.log(user);
     return (
         <div className="bg-base-100 p-6 rounded-2xl shadow-xl">
             <h2 className="text-2xl font-bold mb-6 text-primary">Create New Ticket</h2>

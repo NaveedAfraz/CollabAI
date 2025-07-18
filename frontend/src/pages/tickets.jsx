@@ -3,10 +3,12 @@ import useTickets from "../hooks/useTickets";
 import Navbar from "../components/navbar";
 import CreateTicketForm from "../components/createTicketForm";
 import TicketList from "../components/ticketList";
+import { useAuth } from "../components/auth/authCheck";
 
 export default function Tickets() {
     const { form, handleChange, handleSubmit, tickets, loading } = useTickets();
-
+    const { user } = useAuth();
+    console.log(user);
     return (
         <>
             <Navbar />

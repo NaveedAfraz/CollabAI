@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useAuth } from '../components/auth/authCheck';
+
 function useTickets() {
 
     const [form, setForm] = useState({ title: "", description: "" });
     const [tickets, setTickets] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const { user } = useAuth();
+    console.log(user);
     // const token = localStorage.getItem("token");
 
     const fetchTickets = async () => {
@@ -31,6 +34,10 @@ function useTickets() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!user) {
+            alert("Please login to create a ticket");
+            return;
+        }
         setLoading(true);
         console.log(form);
         try {
